@@ -3,146 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportAlgorithmus - Gestión de Servicios</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <title>SportAlgorithmus - Panel de Administración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <img id="logo" src="logo.png" alt="SportAlgorithmus Logo">
-            <h1>SportAlgorithmus</h1>
-            <p>Gestión de Servicios - Panel de Administración</p>
+    <!-- Header con Logo -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="logo.png" alt="SportAlgorithmus Logo" class="main-logo">
+            </div>
+            <div class="header-text">
+                <h1 class="brand-title">SportAlgorithmus</h1>
+                <p class="brand-subtitle">Panel de Administración - Gestión Inteligente</p>
+            </div>
         </div>
     </header>
 
-    <nav class="main-nav">
-        <div class="nav-container">
-            <a href="#dashboard">Dashboard</a>
-            <a href="#services">Servicios</a>
-            <a href="#analytics">Análisis</a>
-            <a href="#users">Usuarios</a>
-            <a href="#settings">Configuración</a>
-        </div>
-    </nav>
+    <!-- Navegación Lateral -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" data-section="services">
+                    <i class="fas fa-cogs"></i>
+                    <span>Servicios</span>
+                </li>
+                <li class="nav-item" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Análisis</span>
+                </li>
+                <li class="nav-item" data-section="clients">
+                    <i class="fas fa-users"></i>
+                    <span>Clientes</span>
+                </li>
+                <li class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-    <main class="crud-main">
-        <section id="dashboard" class="crud-section active">
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <h2>Total Servicios</h2>
-                    <div class="card-number" id="total-services">0</div>
-                    <div class="card-icon">📊</div>
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="dashboard-header">
+                <h2>Bienvenido al Panel de Control</h2>
+                <p>Gestión inteligente de servicios deportivos y tecnológicos</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card active">
+                    <div class="stat-icon">⚽</div>
+                    <div class="stat-info">
+                        <h3 id="total-services">12</h3>
+                        <p>Servicios Activos</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <h2>Activos</h2>
-                    <div class="card-number" id="active-services">0</div>
-                    <div class="card-icon">✅</div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 id="total-revenue">$24,500</h3>
+                        <p>Ingresos Totales</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <h2>Ingresos</h2>
-                    <div class="card-number" id="total-revenue">$0</div>
-                    <div class="card-icon">💰</div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <h3 id="growth-rate">+23%</h3>
+                        <p>Crecimiento Mensual</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <h2>Última Actualización</h2>
-                    <div class="card-number" id="last-update">13 Sep 2025</div>
-                    <div class="card-icon">🕐</div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <h3 id="active-clients">47</h3>
+                        <p>Clientes Activos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-charts">
+                <div class="chart-card">
+                    <h4>Performance de Servicios</h4>
+                    <canvas id="servicesChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h4>Distribución por Categoría</h4>
+                    <canvas id="categoryChart" width="400" height="200"></canvas>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="crud-section">
-            <div class="crud-header">
+        <!-- Services CRUD Section -->
+        <section id="services" class="content-section">
+            <div class="section-header">
                 <h2>Gestionar Servicios</h2>
-                <button class="btn-primary" id="add-service-btn">+ Nuevo Servicio</button>
+                <div class="section-actions">
+                    <button class="btn-primary" id="add-new-service">
+                        <i class="fas fa-plus"></i> Nuevo Servicio
+                    </button>
+                    <button class="btn-secondary" id="export-services">
+                        <i class="fas fa-download"></i> Exportar
+                    </button>
+                </div>
             </div>
-            
-            <div class="crud-content">
-                <form id="service-form" class="crud-form">
-                    <input type="hidden" id="service-id">
-                    
-                    <div class="form-group">
-                        <label for="service-name">Nombre del Servicio</label>
-                        <input type="text" id="service-name" placeholder="Ej: Desarrollo App Móvil" required>
-                    </div>
-                    
-                    <div class="form-row">
+
+            <!-- Formulario de Servicio -->
+            <div class="crud-panel">
+                <form id="serviceForm" class="service-form">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="service-type">Tipo de Servicio</label>
-                            <select id="service-type" required>
-                                <option value="">Seleccionar tipo</option>
+                            <label for="serviceName">Nombre del Servicio *</label>
+                            <input type="text" id="serviceName" placeholder="Ej: Análisis de Datos Deportivos" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serviceCategory">Categoría *</label>
+                            <select id="serviceCategory" required>
+                                <option value="">Seleccionar categoría</option>
                                 <option value="desarrollo-web">Desarrollo Web</option>
                                 <option value="desarrollo-movil">Desarrollo Móvil</option>
                                 <option value="consultoria">Consultoría Tecnológica</option>
-                                <option value="mantenimiento">Mantenimiento</option>
                                 <option value="analisis-datos">Análisis de Datos</option>
                                 <option value="ux-ui">Diseño UX/UI</option>
+                                <option value="mantenimiento">Mantenimiento</option>
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="service-price">Precio</label>
-                            <input type="number" id="service-price" step="0.01" placeholder="0.00" required>
+                            <label for="servicePrice">Precio (USD) *</label>
+                            <input type="number" id="servicePrice" step="0.01" min="0" placeholder="0.00" required>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="service-description">Descripción</label>
-                        <textarea id="service-description" rows="4" placeholder="Descripción detallada del servicio..." required></textarea>
-                    </div>
-                    
-                    <div class="form-row">
+
                         <div class="form-group">
-                            <label for="service-duration">Duración Estimada</label>
-                            <input type="number" id="service-duration" placeholder="Días" min="1">
+                            <label for="serviceDuration">Duración Estimada (días)</label>
+                            <input type="number" id="serviceDuration" min="1" placeholder="30">
                         </div>
+
+                        <div class="form-group full-width">
+                            <label for="serviceDescription">Descripción Detallada *</label>
+                            <textarea id="serviceDescription" rows="4" placeholder="Describe el servicio, beneficios y características técnicas..." required></textarea>
+                        </div>
+
                         <div class="form-group">
-                            <label for="service-status">Estado</label>
-                            <select id="service-status">
-                                <option value="activo">Activo</option>
-                                <option value="inactivo">Inactivo</option>
+                            <label for="serviceStatus">Estado *</label>
+                            <select id="serviceStatus" required>
+                                <option value="disponible">Disponible</option>
                                 <option value="en-proceso">En Proceso</option>
+                                <option value="completado">Completado</option>
+                                <option value="pausado">Pausado</option>
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-actions">
-                        <button type="submit" class="btn-primary">Guardar Servicio</button>
-                        <button type="button" id="cancel-edit" class="btn-secondary">Cancelar</button>
+                        <input type="hidden" id="editServiceId">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span id="saveButtonText">Guardar Servicio</span>
+                        </button>
+                        <button type="button" id="cancelEdit" class="btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
                     </div>
                 </form>
             </div>
 
-            <div class="crud-table-container">
-                <table class="crud-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="services-table-body">
-                    </tbody>
-                </table>
+            <!-- Tabla de Servicios -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Servicios Registrados <span id="servicesCount">(0)</span></h3>
+                    <div class="table-filters">
+                        <select id="filterStatus">
+                            <option value="">Todos los estados</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="en-proceso">En Proceso</option>
+                            <option value="completado">Completado</option>
+                        </select>
+                        <input type="text" id="searchServices" placeholder="Buscar por nombre...">
+                    </div>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="servicesTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="content-section">
+            <div class="section-header">
+                <h2>Análisis de Rendimiento</h2>
+                <p>Insights basados en algoritmos y datos deportivos</p>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Tendencias de Servicios</h3>
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                <div class="analytics-card">
+                    <h3>Distribución por Categoría</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="analytics-card full-width">
+                    <h3>Predicciones de Demanda</h3>
+                    <div class="prediction-panel">
+                        <div class="prediction-item">
+                            <span class="prediction-label">Desarrollo Móvil</span>
+                            <span class="prediction-value">+45%</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="prediction-label">Análisis de Datos</span>
+                            <span class="prediction-value">+32%</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="prediction-label">UX/UI Design</span>
+                            <span class="prediction-value">+18%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="main-footer">
         <div class="footer-content">
-            <p>© 2025 SportAlgorithmus. Sistema de Gestión de Servicios</p>
-            <div class="social-icons">
-                <a href="https://www.instagram.com/nic._p19" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@nic._19p" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <div class="footer-section">
+                <p>© 2025 SportAlgorithmus. Todos los derechos reservados.</p>
+                <p>Desarrollado por: Nicolás David Palacios Linares & Joshua Daniel Higuera Forero</p>
+            </div>
+            <div class="social-section">
+                <a href="https://www.instagram.com/nic._p19" target="_blank" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@nic._19p" target="_blank" class="social-link">
+                    <i class="fab fa-tiktok"></i>
+                </a>
             </div>
         </div>
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
